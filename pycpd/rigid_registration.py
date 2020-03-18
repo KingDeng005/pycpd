@@ -30,15 +30,16 @@ class rigid_registration(expectation_maximization_registration):
 
         self.R = np.transpose(np.dot(np.dot(U, np.diag(C)), V))
         self.YPY = np.dot(np.transpose(self.P1), np.sum(np.multiply(YY, YY), axis=1))
-        self.s = np.trace(np.dot(np.transpose(self.A), np.transpose(self.R))) / self.YPY
-        self.t = np.transpose(muX) - self.s * np.dot(np.transpose(self.R), np.transpose(muY))
+        # self.s = np.trace(np.dot(np.transpose(self.A), np.transpose(self.R))) / self.YPY
+        self.t = np.transpose(muX) - np.dot(np.transpose(self.R), np.transpose(muY))
 
     def transform_point_cloud(self, Y=None):
         if Y is None:
-            self.TY = self.s * np.dot(self.Y, self.R) + self.t
+            # self.TY = self.s * np.dot(self.Y, self.R) + self.t
+            self.TY = np.dot(self.Y, self.R) + self.t
             return
         else:
-            return self.s * np.dot(Y, self.R) + self.t
+            return np.dot(Y, self.R) + self.t
 
     def update_variance(self):
         qprev = self.q
