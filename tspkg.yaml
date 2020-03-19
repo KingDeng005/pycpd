@@ -1,0 +1,14 @@
+name: pycpd 
+version: __from_changelog__
+maintainer: Fuheng <fuheng.deng@tusimple.ai>
+
+extra_deps: 
+  pip2: numpy
+  pip3: numpy
+
+build: |
+  install_python 2.7 pycpd 
+  install_python 3.5 pycpd 
+
+  compile_python
+  
